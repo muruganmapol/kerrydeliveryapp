@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fml/pages/runsheetlist.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 
 class Otpscreen extends StatefulWidget {
   const Otpscreen({Key? key}) : super(key: key);
@@ -9,12 +11,17 @@ class Otpscreen extends StatefulWidget {
   _OtpscreenState createState() => _OtpscreenState();
 }
 
+var otpdata = myController.text;
+
+
+  final myController = TextEditingController();
+
 class _OtpscreenState extends State<Otpscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 238, 126, 61),
+        backgroundColor: const Color.fromARGB(255, 238, 126, 61),
         centerTitle: true,
         title: const Text(
           "OTP",
@@ -54,8 +61,8 @@ class _OtpscreenState extends State<Otpscreen> {
               height: 30,
             ),
             OtpTextField(
-              numberOfFields: 5,
-              borderColor: Color(0xFF512DA8),
+              numberOfFields: 6,
+              borderColor: const Color(0xFF512DA8),
               //set to true to show as box or false to show as dash
               showFieldAsBox: true,
               //runs when a code is typed in
@@ -65,31 +72,17 @@ class _OtpscreenState extends State<Otpscreen> {
               //runs when every textfield is filled
               onSubmit: (String verificationCode) {
                 showDialog(
+                  barrierLabel: myController.text = verificationCode,
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text("Verification Code"),
+                        title: const Text("Verification Code"),
                         content: Text('Code entered is $verificationCode'),
                       );
                     });
               }, // end onSubmit
             ),
-            // const Padding(
-            //   padding:
-            //       EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
-            //   //padding: EdgeInsets.symmetric(horizontal: 15),
-            //   child: TextField(
-            //     obscureText: true,
-            //     decoration: InputDecoration(
-            //         prefixIcon: Icon(
-            //           Icons.phone_android,
-            //           color: Colors.black38,
-            //         ),
-            //         border: OutlineInputBorder(),
-            //         labelText: 'OTP',
-            //         hintText: 'Enter OTP number'),
-            //   ),
-            // ),
+            
 
             const SizedBox(
               height: 30,
@@ -100,11 +93,8 @@ class _OtpscreenState extends State<Otpscreen> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Runsheetlist()),
-                  );
+                 verifyotp();
+                  
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue[900], // background
@@ -123,5 +113,29 @@ class _OtpscreenState extends State<Otpscreen> {
         ),
       ),
     );
+  }
+
+  void verifyotp() async {
+print(otpdata);
+    var url = Uri.parse("http://182.72.177.132/backend/public/api/getrunsheetotp");
+    Response response = await post(
+       url,
+        body: json.encode({
+          "phone_no": '9245262418',
+          "otp" : otpdata
+        }),
+        headers: {'Content-Type': 'application/json', 'Charset': 'utf-8'},
+      );
+      
+      print(response.body);
+      if (response.statusCode==200) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Runsheetlist()),
+                  );
+      }else{
+        print("ERROR");
+      }
   }
 }
