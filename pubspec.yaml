@@ -44,6 +44,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   sqflite: ^2.0.0+4
   path_provider: ^1.6.28
+  image_picker: ^0.8.0+4
+  syncfusion_flutter_signaturepad: ^19.3.55
+  edge_detection: ^1.0.7
+  image_gallery_saver: ^1.7.1
+  permission_handler: ^5.1.0+2
   
 
 dev_dependencies:

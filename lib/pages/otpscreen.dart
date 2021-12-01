@@ -54,7 +54,7 @@ class _OtpscreenState extends State<Otpscreen> {
               height: 30,
             ),
             OtpTextField(
-              numberOfFields: 5,
+              numberOfFields: 6,
               borderColor: Color(0xFF512DA8),
               //set to true to show as box or false to show as dash
               showFieldAsBox: true,
@@ -95,9 +95,6 @@ class _OtpscreenState extends State<Otpscreen> {
               height: 30,
             ),
             Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(

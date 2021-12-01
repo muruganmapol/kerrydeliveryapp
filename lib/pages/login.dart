@@ -57,9 +57,6 @@ class _LoginState extends State<Login> {
               height: 30,
             ),
             Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -71,8 +68,8 @@ class _LoginState extends State<Login> {
                   primary: Colors.blue[900], // background
                 ),
                 child: const Text(
-                  'Send OTP',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
+                  'Send',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
             ),
