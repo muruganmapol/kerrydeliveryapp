@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
               child: TextField(
           
                 controller: myController,
-                obscureText: true,
+               
                 decoration: InputDecoration(
                   
                     prefixIcon: Icon(
@@ -108,11 +108,10 @@ class _LoginState extends State<Login> {
         headers: {'Content-Type': 'application/json', 'Charset': 'utf-8'},
       );
 
-
       if (response.statusCode==200) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Otpscreen()),
+                    MaterialPageRoute(builder: (context) =>  Otpscreen(number : myController.text)),
                   );
       }
     

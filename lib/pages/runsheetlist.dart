@@ -1,69 +1,86 @@
+// ignore_for_file: unnecessary_new
+
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
+import 'package:fml/model/runsheetdata_model.dart';
+import 'package:fml/pages/gcnnumber.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 
 class Runsheetlist extends StatefulWidget {
-  const Runsheetlist({Key? key}) : super(key: key);
+  const Runsheetlist({Key? key,runsheetnos}) : super(key: key);
 
   @override
   _RunsheetlistState createState() => _RunsheetlistState();
 }
 
 class _RunsheetlistState extends State<Runsheetlist> {
+
+  @override 
   Widget build(BuildContext context) {
-    return Scaffold(
+       final litems = ModalRoute.of(context)!.settings.arguments as User;
+      
+       var runsheelist=litems.runsheetnos; 
+    
+       
+return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 238, 126, 61),
+        backgroundColor: const Color.fromARGB(255, 238, 126, 61),
         centerTitle: true,
         title: const Text(
           "Runsheet List",
           style: TextStyle(color: Colors.white, fontSize: 24),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            const Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
-              //padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.phone_android,
-                      color: Colors.black38,
-                    ),
-                    border: OutlineInputBorder(),
-                    labelText: 'OTP',
-                    hintText: 'Enter OTP number'),
-              ),
-            ),
+      body: ListView.builder(
+        itemCount: runsheelist.length,
+        itemBuilder: (BuildContext context,int index){
+          return ListTile(
+            leading: Icon(
+                    Icons.list,
+                    color: Colors.blue[900],
+                  ),
+                  title: Text(runsheelist[index]),
+                  trailing: const Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.orange,
+                  ),
 
-            const SizedBox(
-              height: 30,
-            ),
-            Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue[900], // background
-                ),
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
-              ),
-            ),
-            // SizedBox(
-            //   height: 130,
-            // ),
-            // Text('New User? Create Account')
-          ],
+             onTap: () {
+              var runsheetNo =  runsheelist[index];
+               _getgcndata(runsheetNo);
+                    
+                    
+                  },
+            );
+        }
         ),
-      ),
-    );
+    );       
+  }
+  void _getgcndata(runsheetNo) async {
+
+    var url = Uri.parse("http://182.72.177.132/backend/public/api/getgcndata");
+    Response response = await post(
+       url,
+        body: json.encode({
+          "runsheet_no" : runsheetNo
+
+        }),
+         headers: {'Content-Type': 'application/json', 'Charset': 'utf-8'},
+      );
+      if (response.statusCode==200) {
+                 Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Gcnnumber(),
+                  settings: RouteSettings(
+                    arguments:User(gcndata :json.decode(response.body), runsheetnos: [])),
+                  ),
+            );
+              
+      }else{
+        print("ERROR");
+      }
   }
 }
