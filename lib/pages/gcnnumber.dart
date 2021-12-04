@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
+import 'package:fml/model/gcn_model.dart';
+import 'package:fml/model/runsheetdata_model.dart';
 import 'package:fml/pages/consignmentupdatescreen.dart';
 
 class Gcnnumber extends StatefulWidget {
@@ -10,10 +13,14 @@ class Gcnnumber extends StatefulWidget {
 
 class _GcnnumberState extends State<Gcnnumber> {
   Widget build(BuildContext context) {
+bool isButtonDisabled =false;
+final litem = ModalRoute.of(context)!.settings.arguments as User;
+
+ var consignment=litem.gcndata; 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 238, 126, 61),
+        backgroundColor: const Color.fromARGB(255, 238, 126, 61),
         centerTitle: true,
         title: const Text(
           "GCN Number",
@@ -38,19 +45,31 @@ class _GcnnumberState extends State<Gcnnumber> {
                 Expanded(
                     flex: 3,
                     child: ListView.builder(
-                      itemCount: 3,
+                      itemCount: consignment.length,
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.all(8.0),
+                        child: Visibility(
+                          
                         child: Card(
                           color: Colors.orange[50],
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const Consignmentupdatescreen()),
-                              );
+                              if(consignment[index]['mob_gc_status'] == ' Delivery'){
+                                    isButtonDisabled = true;
+                                    showAlertDelivery(context);
+
+                              }else{
+                                     Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Consignmentupdatescreen(),
+                  settings: RouteSettings(
+                    arguments:Gcnmodel(docket_no: consignment[index]['consignmentID'], runsheet_id:consignment[index]['runsheet_id'])),
+                  
+                  ),
+                );
+                              }
+                             
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -58,8 +77,8 @@ class _GcnnumberState extends State<Gcnnumber> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Row(children: <Widget>[
-                                    Text(
-                                      'raj',
+                                    Text( 
+                                      consignment[index]['consignmentID'].toString(),
                                       style: TextStyle(
                                           color: Colors.blue[900],
                                           fontWeight: FontWeight.w800,
@@ -71,7 +90,7 @@ class _GcnnumberState extends State<Gcnnumber> {
                                           gradient: LinearGradient(
                                             begin: Alignment.topRight,
                                             end: Alignment.bottomLeft,
-                                            stops: [
+                                            stops: const [
                                               0.2,
                                               0.4,
                                             ],
@@ -85,10 +104,10 @@ class _GcnnumberState extends State<Gcnnumber> {
                                               Border.all(color: Colors.white),
                                           borderRadius:
                                               BorderRadius.circular(10.0)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(6.0),
+                                      child:  Padding(
+                                        padding: EdgeInsets.all(6.0),
                                         child: Text(
-                                          'Confirm',
+                                           consignment[index]['mob_gc_status'].toString(),
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 18),
@@ -102,7 +121,7 @@ class _GcnnumberState extends State<Gcnnumber> {
                                           gradient: LinearGradient(
                                             begin: Alignment.topRight,
                                             end: Alignment.bottomLeft,
-                                            stops: [
+                                            stops: const [
                                               0.2,
                                               0.4,
                                             ],
@@ -116,10 +135,10 @@ class _GcnnumberState extends State<Gcnnumber> {
                                               Border.all(color: Colors.white),
                                           borderRadius:
                                               BorderRadius.circular(10.0)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(6.0),
+                                      child:  Padding(
+                                        padding: EdgeInsets.all(6.0),
                                         child: Text(
-                                          'D',
+                                          consignment[index]['mob_booking']['mob_payment_name'].toString(),
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.w800,
@@ -128,29 +147,29 @@ class _GcnnumberState extends State<Gcnnumber> {
                                       ),
                                     ),
                                   ]),
-                                  Text(
-                                    "Consignee : ",
+                                   Text(
+                                    "Consignee :   " + consignment[index]['mob_booking']['consignee_name'].toString(),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 14),
+                                  ),
+                                   Text(
+                                    "Address : " + consignment[index]['mob_booking']['consignee_address'].toString(),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w800,
                                         fontSize: 14),
                                   ),
                                   Text(
-                                    "Address : ",
+                                    "Pincode : " + consignment[index]['mob_booking']['consignee_pincode'].toString(),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w800,
                                         fontSize: 14),
                                   ),
                                   Text(
-                                    "Pincode : ",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 14),
-                                  ),
-                                  Text(
-                                    "Mobile No : ",
+                                    "Mobile No : "+ consignment[index]['mob_booking']['consignee_phone_no'].toString(),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w800,
@@ -161,6 +180,7 @@ class _GcnnumberState extends State<Gcnnumber> {
                             ),
                           ),
                         ),
+                        ),
                       ),
                     )),
               ],
@@ -168,4 +188,34 @@ class _GcnnumberState extends State<Gcnnumber> {
           )),
     );
   }
+
+  showAlertDelivery(BuildContext context) {
+
+  // set up the button
+  Widget okButton = TextButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.pop(context);
+     },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Alert"),
+    content: Text("This Consignment Delivered"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+
 }

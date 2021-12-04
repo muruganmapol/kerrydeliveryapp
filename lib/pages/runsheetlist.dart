@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_new
 
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:fml/model/runsheetdata_model.dart';
 import 'package:fml/pages/gcnnumber.dart';
 import 'package:http/http.dart';
@@ -33,71 +32,6 @@ return Scaffold(
           style: TextStyle(color: Colors.white, fontSize: 24),
         ),
       ),
-<<<<<<< HEAD
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: Color.fromARGB(255, 241, 241, 241),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    color: Colors.blue[900],
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Gcnnumber()),
-                    );
-                  },
-                  title: Text("RunSheet1"),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.orange,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: Color.fromARGB(255, 241, 241, 241),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    color: Colors.blue[900],
-                  ),
-                  title: Text("RunSheet1"),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.orange,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: Color.fromARGB(255, 241, 241, 241),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    color: Colors.blue[900],
-                  ),
-                  title: Text("RunSheet1"),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.orange,
-                  ),
-                ),
-              ),
-            ),
-          ],
-=======
       body: ListView.builder(
         itemCount: runsheelist.length,
         itemBuilder: (BuildContext context,int index){
@@ -120,7 +54,6 @@ return Scaffold(
                   },
             );
         }
->>>>>>> yuvarajmapol
         ),
     );       
   }
