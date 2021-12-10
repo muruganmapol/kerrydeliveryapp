@@ -1,6 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fml/pages/otpscreen.dart';
+
+import 'package:http/http.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -73,12 +78,7 @@ class _LoginState extends State<Login> {
             ),
             Container(
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Otpscreen()),
-                  );
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue[900], // background
                 ),

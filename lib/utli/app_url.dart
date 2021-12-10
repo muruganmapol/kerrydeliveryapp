@@ -10,3 +10,10 @@ class AppUrl {
       baseURL + "productionworkorder-getall";
   static const String qualityprod = baseURL + "qualityprod";
 }
+
+class DeliveryUrl {
+  static const String liveBaseURL = "http://kerryftl.localhost/api/";
+
+  static const String baseURL = liveBaseURL;
+  static const String delivery = baseURL + "getrunsheet";
+}
