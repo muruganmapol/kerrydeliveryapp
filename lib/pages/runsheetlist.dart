@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fml/pages/pickuform.dart';
 
 class Runsheetlist extends StatefulWidget {
   const Runsheetlist({Key? key}) : super(key: key);
@@ -19,48 +20,68 @@ class _RunsheetlistState extends State<Runsheetlist> {
           style: TextStyle(color: Colors.white, fontSize: 24),
         ),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: <Widget>[
-            const Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
-              //padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.phone_android,
-                      color: Colors.black38,
-                    ),
-                    border: OutlineInputBorder(),
-                    labelText: 'OTP',
-                    hintText: 'Enter OTP number'),
-              ),
-            ),
-
-            const SizedBox(
-              height: 30,
-            ),
-            Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue[900], // background
-                ),
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: Color.fromARGB(255, 241, 241, 241),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    color: Colors.blue[900],
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Pickupform()),
+                    );
+                  },
+                  title: Text("RunSheet1"),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.orange,
+                  ),
                 ),
               ),
             ),
-            // SizedBox(
-            //   height: 130,
-            // ),
-            // Text('New User? Create Account')
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: Color.fromARGB(255, 241, 241, 241),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    color: Colors.blue[900],
+                  ),
+                  title: Text("RunSheet1"),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.orange,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: Color.fromARGB(255, 241, 241, 241),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    color: Colors.blue[900],
+                  ),
+                  title: Text("RunSheet1"),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.orange,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

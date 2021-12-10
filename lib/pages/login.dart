@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fml/pages/otpscreen.dart';
 
 class Login extends StatefulWidget {
@@ -9,6 +10,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String validateMobile(String value) {
+    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    RegExp regExp = new RegExp(pattern);
+    if (value.length == 0) {
+      return 'Please enter mobile number';
+    } else if (!regExp.hasMatch(value)) {
+      return 'Please enter valid mobile number';
+    }
+    return 'null';
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -16,7 +28,7 @@ class _LoginState extends State<Login> {
         backgroundColor: Color.fromARGB(255, 238, 126, 61),
         centerTitle: true,
         title: const Text(
-          "Kerry Indev Delivery",
+          "Kerry Indev Pickup",
           style: TextStyle(color: Colors.white, fontSize: 24),
         ),
       ),
@@ -36,13 +48,16 @@ class _LoginState extends State<Login> {
               ),
             ),
 
-            const Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
-              //padding: EdgeInsets.symmetric(horizontal: 15),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
+              //padding: EdgeInsets.symmetric(horizontal: 15)
               child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ], // Only numbers can be entered
+                decoration: const InputDecoration(
                     prefixIcon: Icon(
                       Icons.phone_android,
                       color: Colors.black38,
@@ -57,9 +72,6 @@ class _LoginState extends State<Login> {
               height: 30,
             ),
             Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -71,8 +83,8 @@ class _LoginState extends State<Login> {
                   primary: Colors.blue[900], // background
                 ),
                 child: const Text(
-                  'Send OTP',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
+                  'Send',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
             ),

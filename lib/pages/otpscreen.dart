@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fml/pages/pickuform.dart';
 import 'package:fml/pages/runsheetlist.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
@@ -14,6 +16,7 @@ class _OtpscreenState extends State<Otpscreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        // automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 238, 126, 61),
         centerTitle: true,
         title: const Text(
@@ -54,7 +57,7 @@ class _OtpscreenState extends State<Otpscreen> {
               height: 30,
             ),
             OtpTextField(
-              numberOfFields: 5,
+              numberOfFields: 6,
               borderColor: Color(0xFF512DA8),
               //set to true to show as box or false to show as dash
               showFieldAsBox: true,
@@ -74,6 +77,25 @@ class _OtpscreenState extends State<Otpscreen> {
                     });
               }, // end onSubmit
             ),
+            SizedBox(
+              height: 15,
+            ),
+            RichText(
+              text: TextSpan(
+                text: 'Didnot receive the code? ',
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.black,
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'RESEND',
+                    recognizer: TapGestureRecognizer()..onTap = () {},
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
             // const Padding(
             //   padding:
             //       EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
@@ -91,19 +113,15 @@ class _OtpscreenState extends State<Otpscreen> {
             //   ),
             // ),
 
-            const SizedBox(
+            SizedBox(
               height: 30,
             ),
             Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const Runsheetlist()),
+                    MaterialPageRoute(builder: (context) => const Pickupform()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
